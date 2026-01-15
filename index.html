@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cambodia MedSupport</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="manifest.json"> <style>
+    body { font-family: sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+    .container { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #007bff; margin-top: 0; }
+    label { font-weight: bold; font-size: 14px; color: #333; display: block; margin-top: 15px; }
+    input, textarea, select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+    button { width: 100%; padding: 15px; background-color: #007bff; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; margin-top: 20px; cursor: pointer; }
+    button:active { background-color: #0056b3; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<div class="container" id="formView">
+  <h2>🏥 Support Request</h2>
+  
+  <label>Hospital ID</label>
+  <input type="text" id="hospital" placeholder="Ex: SR-001">
+
+  <label>Device Name / ID</label>
+  <input type="text" id="device" placeholder="Ex: Ventilator V-02">
+
+  <label>Issue Description</label>
+  <textarea id="issue" rows="4" placeholder="Describe the problem..."></textarea>
+
+  <button onclick="sendData()">SUBMIT REQUEST</button>
+</div>
+
+<div class="container hidden" id="successView" style="text-align: center;">
+  <h1 style="font-size: 50px;">✅</h1>
+  <h3>Request Sent!</h3>
+  <p>The Engineering Team has been notified.</p>
+  <button onclick="location.reload()" style="background-color: #28a745;">New Request</button>
+</div>
+
+<script>
+  function sendData() {
+    // ⚠️ REPLACE THIS WITH YOUR GOOGLE SCRIPT URL ⚠️
+    var url = "https://script.google.com/macros/s/AKfycbz3NOCsa8Ut4xjqhrIQFx_Fm8ii9SZWeaIr5ZdFROeVfb3D7J7Jmxf8Ob6Pw8CxMpCS/exec"; 
+
+    var btn = document.querySelector('button');
+    btn.disabled = true;
+    btn.innerText = "Sending...";
+
+    var data = {
+      hospital: document.getElementById('hospital').value,
+      device: document.getElementById('device').value,
+      issue: document.getElementById('issue').value
+    };
+
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('formView').classList.add('hidden');
+      document.getElementById('successView').classList.remove('hidden');
+    })
+    .catch(error => {
+      alert("Error! Please check your internet connection.");
+      btn.disabled = false;
+      btn.innerText = "SUBMIT REQUEST";
+    });
+  }
+</script>
+
+</body>
+</html>
