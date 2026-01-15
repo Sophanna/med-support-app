@@ -35,7 +35,16 @@
 
   <label>Select Your Hospital</label>
   <select id="setupHospital">
-  <option value="" disabled selected>Loading hospitals...</option>
+    <option value="" disabled selected>-- Choose Hospital --</option>
+    
+    <option value="SR-001">Siem Reap Referral Hospital</option>
+    <option value="PP-002">Phnom Penh Hospital</option>
+    <option value="BT-003">Battambang Referral</option>
+    <option value="KC-004">Kampong Cham Hospital</option>
+    <option value="SH-005">Sihanouk Hospital</option>
+    <option value="SV-006">Svay Rieng Hospital</option>
+    <option value="BMC-007">Banteay Meanchey Hospital</option>
+    
   </select>
 
   <label>Your Name (Doctor/Nurse)</label>
@@ -69,95 +78,64 @@
 </div>
 
 <script>
-  // --- LOGIC ---
+  // --- SIMPLIFIED LOGIC (No Fetching) ---
 
-  // 1. When App Opens: Check if user is already saved
   window.onload = function() {
-    // 1. Existing Setup Check...
+    // 1. Check if user is already logged in
     var savedHospital = localStorage.getItem('hospital_id');
     var savedName = localStorage.getItem('user_name');
 
     if (savedHospital) {
+      // User exists -> Go straight to form
       showForm(savedHospital, savedName);
     } else {
+      // New user -> Show Setup Screen immediately
+      // (No loading, no waiting)
       document.getElementById('setupView').classList.add('active');
-      
-      // --- NEW CODE: FETCH HOSPITAL LIST ---
-      loadHospitals(); 
+    }
+    
+    // Auto-fill logic (for QR codes)
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('h')) {
+      // If QR code has ID, force the setup screen to select it
+      document.getElementById('setupHospital').value = params.get('h');
     }
   }
 
-  function loadHospitals() {
-    var url = "YOUR_WEB_APP_URL"; // Same URL as before
-
-    fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      var selectBox = document.getElementById('setupHospital');
-      
-      // Clear the "Loading..." text
-      selectBox.innerHTML = '<option value="" disabled selected>-- Choose Hospital --</option>';
-
-      // Loop through the data from Google Sheet
-      data.forEach(function(hospital) {
-        var option = document.createElement("option");
-        option.value = hospital.id;
-        option.text = hospital.name; // Display Name (e.g. "Siem Reap Referral")
-        selectBox.appendChild(option);
-      });
-    })
-    .catch(error => {
-      alert("Could not load hospital list. Check internet.");
-    });
-  }
-
-  // 2. Save Profile Function
+  // 2. Save Profile
   function saveProfile() {
     var hospital = document.getElementById('setupHospital').value;
     var name = document.getElementById('setupName').value;
 
     if (hospital && name) {
-      // Save to Phone's Memory
       localStorage.setItem('hospital_id', hospital);
       localStorage.setItem('user_name', name);
-      
-      // Go to Form
       showForm(hospital, name);
     } else {
       alert("Please select a hospital and enter your name.");
     }
   }
 
-  // 3. Show Form Function
+  // 3. Show Form
   function showForm(hospitalId, userName) {
-    // Hide Setup, Show Form
     document.getElementById('setupView').classList.remove('active');
     document.getElementById('formView').classList.add('active');
-
-    // Update the Text on screen
     document.getElementById('displayName').innerText = userName;
-    document.getElementById('hospitalTitle').innerText = hospitalId; // Or map ID to Name if you want
+    document.getElementById('hospitalTitle').innerText = hospitalId;
   }
 
-  // 4. Reset Function (If they want to change hospital)
-  function resetProfile() {
-    if(confirm("Are you sure you want to reset your settings?")) {
-      localStorage.clear();
-      location.reload();
-    }
-  }
-
-  // 5. Send Data to Google Sheet
+  // 4. Send Data to Google Sheet
   function sendData() {
-    var url = "https://script.google.com/macros/s/AKfycbz3NOCsa8Ut4xjqhrIQFx_Fm8ii9SZWeaIr5ZdFROeVfb3D7J7Jmxf8Ob6Pw8CxMpCS/exec"; // <--- PASTE YOUR LINK HERE
+    // ⚠️ PASTE YOUR GOOGLE SCRIPT URL HERE ⚠️
+    var url = "YOUR_WEB_APP_URL_GOES_HERE"; 
 
-    var btn = document.querySelector('#formView button'); // Select the submit button
+    var btn = document.querySelector('#formView button');
     btn.disabled = true;
     btn.innerText = "Sending...";
 
     var data = {
-      hospital: localStorage.getItem('hospital_id'), // Get ID from memory
-      user: localStorage.getItem('user_name'),       // Get Name from memory
+      hospital: localStorage.getItem('hospital_id'),
+      user: localStorage.getItem('user_name'),
       device: document.getElementById('device').value,
       issue: document.getElementById('issue').value
     };
@@ -172,12 +150,19 @@
       document.getElementById('successView').classList.add('active');
     })
     .catch(error => {
-      alert("Error! Check internet.");
+      alert("Error! Check internet connection.");
       btn.disabled = false;
       btn.innerText = "SUBMIT REQUEST";
     });
   }
+  
+  // 5. Reset Profile
+  function resetProfile() {
+    if(confirm("Reset your settings?")) {
+      localStorage.clear();
+      location.reload();
+    }
+  }
 </script>
-
 </body>
 </html>
