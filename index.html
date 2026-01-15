@@ -3,52 +3,138 @@
 <head>
   <title>Cambodia MedSupport</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="manifest" href="manifest.json"> <style>
-    body { font-family: sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-    .container { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body { font-family: sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
+    .container { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: none; /* Hidden by default */ }
+    
+    /* Active class to show a screen */
+    .active { display: block; }
+
     h2 { text-align: center; color: #007bff; margin-top: 0; }
-    label { font-weight: bold; font-size: 14px; color: #333; display: block; margin-top: 15px; }
+    h3 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px;}
+    
+    label { font-weight: bold; font-size: 14px; color: #555; display: block; margin-top: 15px; }
     input, textarea, select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+    
     button { width: 100%; padding: 15px; background-color: #007bff; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; margin-top: 20px; cursor: pointer; }
     button:active { background-color: #0056b3; }
-    .hidden { display: none; }
+    
+    .btn-secondary { background-color: #6c757d; font-size: 14px; padding: 10px; margin-top: 30px; }
+    
+    .info-box { background: #e9f5ff; padding: 10px; border-radius: 5px; font-size: 14px; color: #0056b3; margin-bottom: 15px; }
   </style>
 </head>
 <body>
 
-<div class="container" id="formView">
-  <h2>🏥 Support Request</h2>
-  
-  <label>Hospital ID</label>
-  <input type="text" id="hospital" placeholder="Ex: SR-001">
+<div class="container" id="setupView">
+  <h2>⚙️ App Setup</h2>
+  <div class="info-box">
+    👋 Welcome! Please set up your profile. You only need to do this once.
+  </div>
 
-  <label>Device Name / ID</label>
-  <input type="text" id="device" placeholder="Ex: Ventilator V-02">
+  <label>Select Your Hospital</label>
+  <select id="setupHospital">
+    <option value="" disabled selected>-- Choose Hospital --</option>
+    <option value="SR-001">Siem Reap Referral Hospital</option>
+    <option value="PP-002">Phnom Penh Royal</option>
+    <option value="BT-003">Battambang Referral</option>
+  </select>
+
+  <label>Your Name (Doctor/Nurse)</label>
+  <input type="text" id="setupName" placeholder="Ex: Dr. Sokha">
+
+  <button onclick="saveProfile()">SAVE & CONTINUE</button>
+</div>
+
+<div class="container" id="formView">
+  <h2 id="hospitalTitle">🏥 Support</h2>
+  
+  <p style="text-align:center; color:#777; font-size:14px;">
+    Logged in as: <b id="displayName">...</b>
+  </p>
+
+  <label>Device / Equipment Name</label>
+  <input type="text" id="device" placeholder="Ex: Ventilator Room 3">
 
   <label>Issue Description</label>
   <textarea id="issue" rows="4" placeholder="Describe the problem..."></textarea>
 
   <button onclick="sendData()">SUBMIT REQUEST</button>
+
+  <button class="btn-secondary" onclick="resetProfile()">🔄 Reset Settings</button>
 </div>
 
-<div class="container hidden" id="successView" style="text-align: center;">
+<div class="container" id="successView" style="text-align: center;">
   <h1 style="font-size: 50px;">✅</h1>
   <h3>Request Sent!</h3>
-  <p>The Engineering Team has been notified.</p>
   <button onclick="location.reload()" style="background-color: #28a745;">New Request</button>
 </div>
 
 <script>
-  function sendData() {
-    // ⚠️ REPLACE THIS WITH YOUR GOOGLE SCRIPT URL ⚠️
-    var url = "https://script.google.com/macros/s/AKfycbz3NOCsa8Ut4xjqhrIQFx_Fm8ii9SZWeaIr5ZdFROeVfb3D7J7Jmxf8Ob6Pw8CxMpCS/exec"; 
+  // --- LOGIC ---
 
-    var btn = document.querySelector('button');
+  // 1. When App Opens: Check if user is already saved
+  window.onload = function() {
+    var savedHospital = localStorage.getItem('hospital_id');
+    var savedName = localStorage.getItem('user_name');
+
+    if (savedHospital) {
+      // User is already setup! Show Form directly
+      showForm(savedHospital, savedName);
+    } else {
+      // New user! Show Setup Screen
+      document.getElementById('setupView').classList.add('active');
+    }
+  }
+
+  // 2. Save Profile Function
+  function saveProfile() {
+    var hospital = document.getElementById('setupHospital').value;
+    var name = document.getElementById('setupName').value;
+
+    if (hospital && name) {
+      // Save to Phone's Memory
+      localStorage.setItem('hospital_id', hospital);
+      localStorage.setItem('user_name', name);
+      
+      // Go to Form
+      showForm(hospital, name);
+    } else {
+      alert("Please select a hospital and enter your name.");
+    }
+  }
+
+  // 3. Show Form Function
+  function showForm(hospitalId, userName) {
+    // Hide Setup, Show Form
+    document.getElementById('setupView').classList.remove('active');
+    document.getElementById('formView').classList.add('active');
+
+    // Update the Text on screen
+    document.getElementById('displayName').innerText = userName;
+    document.getElementById('hospitalTitle').innerText = hospitalId; // Or map ID to Name if you want
+  }
+
+  // 4. Reset Function (If they want to change hospital)
+  function resetProfile() {
+    if(confirm("Are you sure you want to reset your settings?")) {
+      localStorage.clear();
+      location.reload();
+    }
+  }
+
+  // 5. Send Data to Google Sheet
+  function sendData() {
+    var url = "https://script.google.com/macros/s/AKfycbz3NOCsa8Ut4xjqhrIQFx_Fm8ii9SZWeaIr5ZdFROeVfb3D7J7Jmxf8Ob6Pw8CxMpCS/exec"; // <--- PASTE YOUR LINK HERE
+
+    var btn = document.querySelector('#formView button'); // Select the submit button
     btn.disabled = true;
     btn.innerText = "Sending...";
 
     var data = {
-      hospital: document.getElementById('hospital').value,
+      hospital: localStorage.getItem('hospital_id'), // Get ID from memory
+      user: localStorage.getItem('user_name'),       // Get Name from memory
       device: document.getElementById('device').value,
       issue: document.getElementById('issue').value
     };
@@ -59,11 +145,11 @@
     })
     .then(response => response.text())
     .then(data => {
-      document.getElementById('formView').classList.add('hidden');
-      document.getElementById('successView').classList.remove('hidden');
+      document.getElementById('formView').classList.remove('active');
+      document.getElementById('successView').classList.add('active');
     })
     .catch(error => {
-      alert("Error! Please check your internet connection.");
+      alert("Error! Check internet.");
       btn.disabled = false;
       btn.innerText = "SUBMIT REQUEST";
     });
