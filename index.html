@@ -35,10 +35,7 @@
 
   <label>Select Your Hospital</label>
   <select id="setupHospital">
-    <option value="" disabled selected>-- Choose Hospital --</option>
-    <option value="SR-001">Siem Reap Referral Hospital</option>
-    <option value="PP-002">Phnom Penh Royal</option>
-    <option value="BT-003">Battambang Referral</option>
+  <option value="" disabled selected>Loading hospitals...</option>
   </select>
 
   <label>Your Name (Doctor/Nurse)</label>
@@ -76,16 +73,42 @@
 
   // 1. When App Opens: Check if user is already saved
   window.onload = function() {
+    // 1. Existing Setup Check...
     var savedHospital = localStorage.getItem('hospital_id');
     var savedName = localStorage.getItem('user_name');
 
     if (savedHospital) {
-      // User is already setup! Show Form directly
       showForm(savedHospital, savedName);
     } else {
-      // New user! Show Setup Screen
       document.getElementById('setupView').classList.add('active');
+      
+      // --- NEW CODE: FETCH HOSPITAL LIST ---
+      loadHospitals(); 
     }
+  }
+
+  function loadHospitals() {
+    var url = "YOUR_WEB_APP_URL"; // Same URL as before
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      var selectBox = document.getElementById('setupHospital');
+      
+      // Clear the "Loading..." text
+      selectBox.innerHTML = '<option value="" disabled selected>-- Choose Hospital --</option>';
+
+      // Loop through the data from Google Sheet
+      data.forEach(function(hospital) {
+        var option = document.createElement("option");
+        option.value = hospital.id;
+        option.text = hospital.name; // Display Name (e.g. "Siem Reap Referral")
+        selectBox.appendChild(option);
+      });
+    })
+    .catch(error => {
+      alert("Could not load hospital list. Check internet.");
+    });
   }
 
   // 2. Save Profile Function
