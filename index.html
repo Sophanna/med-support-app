@@ -1,36 +1,153 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cambodia MedSupport</title>
+  <title>Pet Thom</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="manifest" href="manifest.json">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
-    .container { background: white; width: 100%; max-width: 400px; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: none; /* Hidden by default */ }
+    /* --- BEAUTIFUL STYLING START --- */
+    body { 
+      font-family: 'Inter', sans-serif; /* Clean, modern font */
+      background-color: #f4f7f6; 
+      margin: 0; 
+      padding: 20px; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
+      min-height: 100vh; 
+      color: #333;
+    }
+
+    .container { 
+      background: white; 
+      width: 100%; 
+      max-width: 380px; 
+      padding: 30px; 
+      border-radius: 20px; /* Softer corners */
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05); /* Soft, expensive-looking shadow */
+      display: none; 
+      animation: fadeIn 0.3s ease-in-out;
+    }
     
-    /* Active class to show a screen */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .active { display: block; }
 
-    h2 { text-align: center; color: #007bff; margin-top: 0; }
-    h3 { color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; margin-bottom: 20px;}
+    /* LOGO STYLING */
+    .logo-area {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .app-logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 22px; /* iOS style shape */
+      box-shadow: 0 4px 12px rgba(0,123,255, 0.2);
+      object-fit: cover;
+    }
+
+    h2 { 
+      text-align: center; 
+      color: #1a1a1a; 
+      margin-top: 0; 
+      font-weight: 700;
+      font-size: 24px;
+    }
     
-    label { font-weight: bold; font-size: 14px; color: #555; display: block; margin-top: 15px; }
-    input, textarea, select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+    h3 { 
+      color: #007bff; 
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
     
-    button { width: 100%; padding: 15px; background-color: #007bff; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; margin-top: 20px; cursor: pointer; }
-    button:active { background-color: #0056b3; }
+    label { 
+      font-weight: 600; 
+      font-size: 13px; 
+      color: #666; 
+      display: block; 
+      margin-top: 18px; 
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* PRETTY INPUTS */
+    input, textarea, select { 
+      width: 100%; 
+      padding: 14px; 
+      border: 2px solid #eef2f5; 
+      border-radius: 12px; 
+      box-sizing: border-box; 
+      font-size: 16px; 
+      background-color: #fdfdfd;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Glow effect when typing */
+    input:focus, textarea:focus, select:focus {
+      border-color: #007bff;
+      outline: none;
+      background-color: #fff;
+      box-shadow: 0 0 0 4px rgba(0,123,255, 0.1);
+    }
     
-    .btn-secondary { background-color: #6c757d; font-size: 14px; padding: 10px; margin-top: 30px; }
+    /* BUTTONS */
+    button { 
+      width: 100%; 
+      padding: 16px; 
+      background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient looks more pro */
+      color: white; 
+      border: none; 
+      border-radius: 12px; 
+      font-size: 16px; 
+      font-weight: 700; 
+      margin-top: 25px; 
+      cursor: pointer; 
+      box-shadow: 0 4px 10px rgba(0,123,255, 0.3);
+      transition: transform 0.1s;
+    }
+    button:active { transform: scale(0.98); }
     
-    .info-box { background: #e9f5ff; padding: 10px; border-radius: 5px; font-size: 14px; color: #0056b3; margin-bottom: 15px; }
+    .btn-secondary { 
+      background: #f0f2f5; 
+      color: #555; 
+      font-size: 14px; 
+      padding: 12px; 
+      margin-top: 20px; 
+      box-shadow: none;
+    }
+    
+    .info-box { 
+      background: #eef7ff; 
+      padding: 15px; 
+      border-radius: 12px; 
+      font-size: 14px; 
+      color: #0066cc; 
+      line-height: 1.5;
+      margin-bottom: 20px; 
+      text-align: center;
+    }
+    /* --- BEAUTIFUL STYLING END --- */
   </style>
 </head>
 <body>
 
 <div class="container" id="setupView">
-  <h2>⚙️ App Setup</h2>
+  
+  <div class="logo-area">
+    <img src="icon.png" class="app-logo" alt="Pet Thom Logo">
+  </div>
+
+  <h2>Welcome</h2>
   <div class="info-box">
-    👋 Welcome! Please set up your profile. You only need to do this once.
+    Please identify yourself to get started.
   </div>
 
   <label>Select Your Hospital</label>
@@ -38,71 +155,66 @@
     <option value="" disabled selected>-- Choose Hospital --</option>
     
     <option value="SR-001">Siem Reap Referral Hospital</option>
-    <option value="PP-002">Phnom Penh Hospital</option>
-    <option value="BT-003">Battambang Referral</option>
-    <option value="KC-004">Kampong Cham Hospital</option>
-    <option value="SH-005">Sihanouk Hospital</option>
-    <option value="SV-006">Svay Rieng Hospital</option>
-    <option value="BMC-007">Banteay Meanchey Hospital</option>
-    
-  </select>
+    <option value="PP-002">Phnom Penh Royal Hospital</option>
+    </select>
 
-  <label>Your Name (Doctor/Nurse)</label>
+  <label>Your Name</label>
   <input type="text" id="setupName" placeholder="Ex: Dr. Sokha">
 
-  <button onclick="saveProfile()">SAVE & CONTINUE</button>
+  <button onclick="saveProfile()">Start App</button>
 </div>
 
 <div class="container" id="formView">
-  <h2 id="hospitalTitle">🏥 Support</h2>
+  <div class="logo-area" style="margin-bottom:10px;">
+    <img src="icon.png" style="width:50px; height:50px; border-radius:10px;">
+  </div>
   
-  <p style="text-align:center; color:#777; font-size:14px;">
-    Logged in as: <b id="displayName">...</b>
+  <h2 id="hospitalTitle">Support</h2>
+  
+  <p style="text-align:center; color:#888; font-size:13px; margin-top:-10px;">
+    User: <b id="displayName">...</b>
   </p>
+  
+  <hr style="border:0; height:1px; background:#eee; margin:20px 0;">
 
-  <label>Device / Equipment Name</label>
-  <input type="text" id="device" placeholder="Ex: Ventilator Room 3">
+  <label>Device Name</label>
+  <input type="text" id="device" placeholder="Ex: X-Ray Room 1">
 
   <label>Issue Description</label>
-  <textarea id="issue" rows="4" placeholder="Describe the problem..."></textarea>
+  <textarea id="issue" rows="4" placeholder="Describe what is wrong..."></textarea>
 
   <button onclick="sendData()">SUBMIT REQUEST</button>
 
-  <button class="btn-secondary" onclick="resetProfile()">🔄 Reset Settings</button>
+  <button class="btn-secondary" onclick="resetProfile()">Logout / Switch Hospital</button>
 </div>
 
-<div class="container" id="successView" style="text-align: center;">
-  <h1 style="font-size: 50px;">✅</h1>
-  <h3>Request Sent!</h3>
-  <button onclick="location.reload()" style="background-color: #28a745;">New Request</button>
+<div class="container" id="successView" style="text-align: center; padding: 50px 30px;">
+  <div style="font-size: 60px; margin-bottom: 20px;">✅</div>
+  <h2>Request Sent!</h2>
+  <p style="color:#666; margin-bottom: 30px;">The engineering team has been notified.</p>
+  <button onclick="location.reload()" style="background: #28a745; box-shadow: 0 4px 10px rgba(40,167,69,0.3);">New Request</button>
 </div>
 
 <script>
-  // --- SIMPLIFIED LOGIC (No Fetching) ---
+  // --- LOGIC (Same as before) ---
 
   window.onload = function() {
-    // 1. Check if user is already logged in
     var savedHospital = localStorage.getItem('hospital_id');
     var savedName = localStorage.getItem('user_name');
 
-    if (savedHospital) {
-      // User exists -> Go straight to form
-      showForm(savedHospital, savedName);
-    } else {
-      // New user -> Show Setup Screen immediately
-      // (No loading, no waiting)
-      document.getElementById('setupView').classList.add('active');
-    }
-    
-    // Auto-fill logic (for QR codes)
+    // QR Auto-fill check
     const params = new URLSearchParams(window.location.search);
     if (params.has('h')) {
-      // If QR code has ID, force the setup screen to select it
       document.getElementById('setupHospital').value = params.get('h');
+    }
+
+    if (savedHospital) {
+      showForm(savedHospital, savedName);
+    } else {
+      document.getElementById('setupView').classList.add('active');
     }
   }
 
-  // 2. Save Profile
   function saveProfile() {
     var hospital = document.getElementById('setupHospital').value;
     var name = document.getElementById('setupName').value;
@@ -112,26 +224,33 @@
       localStorage.setItem('user_name', name);
       showForm(hospital, name);
     } else {
-      alert("Please select a hospital and enter your name.");
+      alert("Please complete all fields.");
     }
   }
 
-  // 3. Show Form
   function showForm(hospitalId, userName) {
     document.getElementById('setupView').classList.remove('active');
     document.getElementById('formView').classList.add('active');
     document.getElementById('displayName').innerText = userName;
-    document.getElementById('hospitalTitle').innerText = hospitalId;
+    // Optional: You can make a map here to show "Siem Reap" instead of "SR-001"
+    document.getElementById('hospitalTitle').innerText = hospitalId; 
   }
 
-  // 4. Send Data to Google Sheet
+  function resetProfile() {
+    if(confirm("Log out and change hospital?")) {
+      localStorage.clear();
+      location.reload();
+    }
+  }
+
   function sendData() {
-    // ⚠️ PASTE YOUR GOOGLE SCRIPT URL HERE ⚠️
+    // ⚠️ PASTE YOUR GOOGLE SCRIPT URL HERE
     var url = "https://script.google.com/macros/s/AKfycbz3NOCsa8Ut4xjqhrIQFx_Fm8ii9SZWeaIr5ZdFROeVfb3D7J7Jmxf8Ob6Pw8CxMpCS/exec"; 
 
     var btn = document.querySelector('#formView button');
     btn.disabled = true;
     btn.innerText = "Sending...";
+    btn.style.opacity = "0.7";
 
     var data = {
       hospital: localStorage.getItem('hospital_id'),
@@ -153,16 +272,10 @@
       alert("Error! Check internet connection.");
       btn.disabled = false;
       btn.innerText = "SUBMIT REQUEST";
+      btn.style.opacity = "1";
     });
   }
-  
-  // 5. Reset Profile
-  function resetProfile() {
-    if(confirm("Reset your settings?")) {
-      localStorage.clear();
-      location.reload();
-    }
-  }
 </script>
+
 </body>
 </html>
