@@ -4,13 +4,11 @@
   <title>Pet Thom</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="manifest" href="manifest.json">
-  
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    /* --- BEAUTIFUL STYLING START --- */
     body { 
-      font-family: 'Inter', sans-serif; /* Clean, modern font */
+      font-family: 'Inter', sans-serif;
       background-color: #f4f7f6; 
       margin: 0; 
       padding: 20px; 
@@ -26,10 +24,12 @@
       width: 100%; 
       max-width: 380px; 
       padding: 30px; 
-      border-radius: 20px; /* Softer corners */
-      box-shadow: 0 10px 25px rgba(0,0,0,0.05); /* Soft, expensive-looking shadow */
+      border-radius: 20px; 
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
       display: none; 
-      animation: fadeIn 1s ease-in-out;
+      
+      /* YOUR CUSTOM ANIMATION SPEED */
+      animation: fadeIn 1s ease-in-out; 
     }
     
     @keyframes fadeIn {
@@ -39,134 +39,92 @@
 
     .active { display: block; }
 
-    /* LOGO STYLING */
     .logo-area {
       text-align: center;
-      margin-bottom: 50px;
+      /* YOUR CUSTOM MARGIN */
+      margin-bottom: 50px; 
     }
+
+    /* Standard Logo (for Report Screen) */
     .app-logo {
-      wth: 100px;
-      height: 100px;
-      border-radius: 22px; /* iOS style shape */
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
       box-shadow: 0 4px 12px rgba(0,123,255, 0.2);
       object-fit: cover;
     }
 
-    h2 { 
-      text-align: center; 
-      color: #1a1a1a; 
-      margin-top: 0; 
-      font-weight: 700;
-      font-size: 24px;
-    }
-    
-    h3 { 
-      color: #007bff; 
-      margin-bottom: 20px;
-      font-size: 18px;
-    }
-    
-    label { 
-      font-weight: 600; 
-      font-size: 13px; 
-      color: #666; 
-      display: block; 
-      margin-top: 18px; 
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    /* BIG Logo (For Login Screen Only) */
+    .big-logo {
+      width: 150px; /* Much bigger */
+      height: 150px;
+      border-radius: 30px;
+      box-shadow: 0 8px 20px rgba(0,123,255, 0.25);
+      object-fit: cover;
     }
 
-    /* PRETTY INPUTS */
+    h2 { text-align: center; color: #1a1a1a; margin-top: 0; font-weight: 700; font-size: 24px; }
+    
+    label { 
+      font-weight: 600; font-size: 13px; color: #666; display: block; 
+      margin-top: 15px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; 
+    }
+
     input, textarea, select { 
-      wth: 100%; 
-      padding: 14px; 
-      border: 2px sol #eef2f5; 
-      border-radius: 12px; 
-      box-sizing: border-box; 
-      font-size: 16px; 
-      background-color: #fdfdfd;
-      transition: all 0.2s;
+      width: 100%; padding: 14px; border: 2px solid #eef2f5; border-radius: 12px; 
+      box-sizing: border-box; font-size: 16px; background-color: #fdfdfd; transition: all 0.2s;
       font-family: 'Inter', sans-serif;
     }
 
-    /* Glow effect when typing */
     input:focus, textarea:focus, select:focus {
-      border-color: #007bff;
-      outline: none;
-      background-color: #fff;
+      border-color: #007bff; outline: none; background-color: #fff;
       box-shadow: 0 0 0 4px rgba(0,123,255, 0.1);
     }
     
-    /* BUTTONS */
     button { 
-      wth: 100%; 
-      padding: 16px; 
-      background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient looks more pro */
-      color: white; 
-      border: none; 
-      border-radius: 12px; 
-      font-size: 16px; 
-      font-weight: 700; 
-      margin-top: 25px; 
-      cursor: pointer; 
-      box-shadow: 0 4px 10px rgba(0,123,255, 0.3);
-      transition: transform 0.1s;
+      width: 100%; padding: 16px; background: linear-gradient(135deg, #007bff, #0056b3); 
+      color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; 
+      margin-top: 25px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,123,255, 0.3);
     }
     button:active { transform: scale(0.98); }
     
     .btn-secondary { 
-      background: #f0f2f5; 
-      color: #555; 
-      font-size: 14px; 
-      padding: 12px; 
-      margin-top: 20px; 
-      box-shadow: none;
+      background: #f0f2f5; color: #555; font-size: 14px; padding: 12px; margin-top: 20px; box-shadow: none;
     }
-    
-    .info-box { 
-      background: #eef7ff; 
-      padding: 15px; 
-      border-radius: 12px; 
-      font-size: 14px; 
-      color: #0066cc; 
-      line-height: 1.5;
-      margin-bottom: 20px; 
-      text-align: center;
-    }
-    /* --- BEAUTIFUL STYLING END --- */
   </style>
 </head>
 <body>
 
-<div class="container" ="setupView">
+<div class="container" id="setupView">
   
   <div class="logo-area">
-    <img src="icon.png" class="app-logo" alt="Pet Thom Logo">
+    <img src="icon.png" class="big-logo" alt="Pet Thom Logo">
   </div>
 
-  <h2>Welcome</h2>
-  <div class="info-box">
-    Please entify yourself to get started.
-  </div>
+  <h2>Identify Yourself</h2>
 
   <label>Select Your Hospital</label>
-  <select ="setupHospital">
+  <select id="setupHospital">
     <option value="" disabled selected>-- Choose Hospital --</option>
-    
     <option value="SR-001">Siem Reap Referral Hospital</option>
     <option value="PP-002">Phnom Penh Royal Hospital</option>
-    </select>
+  </select>
 
   <label>Your Name</label>
   <input type="text" id="setupName" placeholder="Ex: Dr. Sokha">
+
+  <label>Phone Number</label>
+  <input type="tel" id="setupPhone" placeholder="012 345 678">
+
+  <label>Department</label>
+  <input type="text" id="setupDept" placeholder="Ex: ICU, ER, X-Ray">
 
   <button onclick="saveProfile()">Start App</button>
 </div>
 
 <div class="container" id="formView">
-  <div class="logo-area" style="margin-bottom:10px;">
-    <img src="icon.png" style="width:50px; height:50px; border-radius:10px;">
+  <div style="text-align:center; margin-bottom:20px;">
+    <img src="icon.png" class="app-logo">
   </div>
   
   <h2 id="hospitalTitle">Support</h2>
@@ -185,7 +143,7 @@
 
   <button onclick="sendData()">SUBMIT REQUEST</button>
 
-  <button class="btn-secondary" onclick="resetProfile()">Logout / Switch Hospital</button>
+  <button class="btn-secondary" onclick="resetProfile()">Logout</button>
 </div>
 
 <div class="container" id="successView" style="text-align: center; padding: 50px 30px;">
@@ -196,19 +154,17 @@
 </div>
 
 <script>
-  // --- LOGIC (Same as before) ---
-
   window.onload = function() {
     var savedHospital = localStorage.getItem('hospital_id');
     var savedName = localStorage.getItem('user_name');
 
-    // QR Auto-fill check
+    // QR Code Auto-fill
     const params = new URLSearchParams(window.location.search);
     if (params.has('h')) {
       document.getElementById('setupHospital').value = params.get('h');
     }
 
-    if (savedHospital) {
+    if (savedHospital && savedName) {
       showForm(savedHospital, savedName);
     } else {
       document.getElementById('setupView').classList.add('active');
@@ -218,13 +174,19 @@
   function saveProfile() {
     var hospital = document.getElementById('setupHospital').value;
     var name = document.getElementById('setupName').value;
+    var phone = document.getElementById('setupPhone').value;
+    var dept = document.getElementById('setupDept').value;
 
-    if (hospital && name) {
+    if (hospital && name && phone && dept) {
+      // Save all 4 items to phone memory
       localStorage.setItem('hospital_id', hospital);
       localStorage.setItem('user_name', name);
+      localStorage.setItem('user_phone', phone);
+      localStorage.setItem('user_dept', dept);
+
       showForm(hospital, name);
     } else {
-      alert("Please complete all fields.");
+      alert("Please fill in all fields.");
     }
   }
 
@@ -232,12 +194,11 @@
     document.getElementById('setupView').classList.remove('active');
     document.getElementById('formView').classList.add('active');
     document.getElementById('displayName').innerText = userName;
-    // Optional: You can make a map here to show "Siem Reap" instead of "SR-001"
     document.getElementById('hospitalTitle').innerText = hospitalId; 
   }
 
   function resetProfile() {
-    if(confirm("Log out and change hospital?")) {
+    if(confirm("Log out and change details?")) {
       localStorage.clear();
       location.reload();
     }
@@ -255,6 +216,8 @@
     var data = {
       hospital: localStorage.getItem('hospital_id'),
       user: localStorage.getItem('user_name'),
+      phone: localStorage.getItem('user_phone'), // Sending Phone
+      dept: localStorage.getItem('user_dept'),   // Sending Dept
       device: document.getElementById('device').value,
       issue: document.getElementById('issue').value
     };
@@ -269,7 +232,7 @@
       document.getElementById('successView').classList.add('active');
     })
     .catch(error => {
-      alert("Error! Check internet connection.");
+      alert("Error! Check internet.");
       btn.disabled = false;
       btn.innerText = "SUBMIT REQUEST";
       btn.style.opacity = "1";
@@ -278,9 +241,4 @@
 </script>
 
 </body>
-
 </html>
-
-
-
-
