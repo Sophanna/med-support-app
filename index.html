@@ -216,7 +216,47 @@
       location.reload();
     }
   }
+// Store the photo data here
+  var base64Photo = "";
 
+  function handlePhoto() {
+    var input = document.getElementById('cameraInput');
+    var file = input.files[0];
+    
+    if (file) {
+      // Create a reader to compress the image
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = new Image();
+        img.src = e.target.result;
+        
+        img.onload = function() {
+          // Create a canvas to resize
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext('2d');
+          
+          // Max size 800px (Good for Telegram, fast upload)
+          var MAX_WIDTH = 800;
+          var scale = MAX_WIDTH / img.width;
+          canvas.width = MAX_WIDTH;
+          canvas.height = img.height * scale;
+          
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          
+          // Save the compressed photo string
+          base64Photo = canvas.toDataURL('image/jpeg', 0.7); // 0.7 quality
+          
+          // Show Preview
+          document.getElementById('previewImg').src = base64Photo;
+          document.getElementById('photoPreview').style.display = 'block';
+          document.getElementById('photoBtn').innerText = "✅ Photo Ready (Click to Change)";
+          document.getElementById('photoBtn').style.background = "#28a745";
+        }
+      }
+      reader.readAsDataURL(file);
+    }
+  }
+  
   function sendData() {
     // ⚠️ PASTE YOUR GOOGLE SCRIPT URL HERE
     var url = "https://script.google.com/macros/s/AKfycbz3NOCsa8Ut4xjqhrIQFx_Fm8ii9SZWeaIr5ZdFROeVfb3D7J7Jmxf8Ob6Pw8CxMpCS/exec"; 
@@ -229,10 +269,11 @@
     var data = {
       hospital: localStorage.getItem('hospital_id'),
       user: localStorage.getItem('user_name'),
-      phone: localStorage.getItem('user_phone'), // Sending Phone
-      dept: localStorage.getItem('user_dept'),   // Sending Dept
+      phone: localStorage.getItem('user_phone'),
+      dept: localStorage.getItem('user_dept'),
       device: document.getElementById('device').value,
-      issue: document.getElementById('issue').value
+      issue: document.getElementById('issue').value,
+      image: base64Photo // <--- ADD THIS LINE
     };
 
     fetch(url, {
@@ -255,4 +296,5 @@
 
 </body>
 </html>
+
 
