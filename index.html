@@ -45,7 +45,7 @@
       margin-bottom: 50px;
     }
     .app-logo {
-      width: 100px;
+      wth: 100px;
       height: 100px;
       border-radius: 22px; /* iOS style shape */
       box-shadow: 0 4px 12px rgba(0,123,255, 0.2);
@@ -79,9 +79,9 @@
 
     /* PRETTY INPUTS */
     input, textarea, select { 
-      width: 100%; 
+      wth: 100%; 
       padding: 14px; 
-      border: 2px solid #eef2f5; 
+      border: 2px sol #eef2f5; 
       border-radius: 12px; 
       box-sizing: border-box; 
       font-size: 16px; 
@@ -100,7 +100,7 @@
     
     /* BUTTONS */
     button { 
-      width: 100%; 
+      wth: 100%; 
       padding: 16px; 
       background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient looks more pro */
       color: white; 
@@ -139,7 +139,7 @@
 </head>
 <body>
 
-<div class="container" id="setupView">
+<div class="container" ="setupView">
   
   <div class="logo-area">
     <img src="icon.png" class="app-logo" alt="Pet Thom Logo">
@@ -147,11 +147,11 @@
 
   <h2>Welcome</h2>
   <div class="info-box">
-    Please identify yourself to get started.
+    Please entify yourself to get started.
   </div>
 
   <label>Select Your Hospital</label>
-  <select id="setupHospital">
+  <select ="setupHospital">
     <option value="" disabled selected>-- Choose Hospital --</option>
     
     <option value="SR-001">Siem Reap Referral Hospital</option>
@@ -160,9 +160,6 @@
 
   <label>Your Name</label>
   <input type="text" id="setupName" placeholder="Ex: Dr. Sokha">
-
-  <label>Your Phone Number</label>
-  <input type="text" id="setupName" placeholder="Ex: 012 345 678">
 
   <button onclick="saveProfile()">Start App</button>
 </div>
@@ -283,6 +280,7 @@
 </body>
 
 </html>
+
 
 
 
