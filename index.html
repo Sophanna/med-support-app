@@ -140,6 +140,19 @@
 
   <label>Issue Description</label>
   <textarea id="issue" rows="4" placeholder="Describe what is wrong..."></textarea>
+  
+  <label>Attach Photo (Optional)</label>
+  
+  <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto()">
+  
+  <button type="button" id="photoBtn" onclick="document.getElementById('cameraInput').click()" style="background: #6c757d; margin-top: 5px;">
+    📷 Take Photo
+  </button>
+  
+  <div id="photoPreview" style="margin-top: 10px; text-align: center; display: none;">
+    <img id="previewImg" style="max-width: 100px; border-radius: 10px; border: 2px solid #ddd;">
+    <p style="font-size: 12px; color: green; margin: 5px 0;">Photo attached!</p>
+  </div>
 
   <button onclick="sendData()">SUBMIT REQUEST</button>
 
@@ -242,3 +255,4 @@
 
 </body>
 </html>
+
