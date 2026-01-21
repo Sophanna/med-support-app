@@ -189,11 +189,33 @@
   <button class="btn-secondary" onclick="resetProfile()">Logout</button>
 </div>
 
+  <div style="margin-top: 30px; text-align: center;">
+  <a href="#" onclick="openManager()" style="font-size: 12px; color: #ccc; text-decoration: none;">Manager Access</a>
+</div>
+
 <div class="container" id="successView" style="text-align: center; padding: 50px 30px;">
   <div style="font-size: 60px; margin-bottom: 20px;">✅</div>
   <h2>Request Sent!</h2>
   <p style="color:#666; margin-bottom: 30px;">The engineering team has been notified.</p>
   <button onclick="location.reload()" style="background: #28a745; box-shadow: 0 4px 10px rgba(40,167,69,0.3);">New Request</button>
+</div>
+
+<div class="container" id="managerView" style="max-width: 400px;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <h2 style="margin:0;">📊 Analytics</h2>
+    <button onclick="closeManager()" style="width:auto; padding:8px 15px; margin:0; font-size:12px; background:#6c757d;">Close</button>
+  </div>
+
+  <div class="info-box" style="background: #eef2f5; color: #333; text-align: left;">
+    <h3 style="margin:0 0 5px 0; font-size:14px; color:#666;">TOTAL REQUESTS</h3>
+    <span id="totalTickets" style="font-size: 32px; font-weight: 800; color: #007bff;">0</span>
+  </div>
+
+  <h3 style="margin-top:25px; border-bottom: 2px solid #eee; padding-bottom: 10px;">🏆 Most Problematic Devices</h3>
+  
+  <div id="statsList" style="margin-top: 15px;">
+    <p style="text-align:center; color:#999;">Loading data...</p>
+  </div>
 </div>
 
 <script>
@@ -245,6 +267,71 @@
       localStorage.clear();
       location.reload();
     }
+  }
+
+  function openManager() {
+    // Simple Security: Ask for a PIN
+    var pin = prompt("Enter Manager PIN:");
+    if (pin === "1234") { // <--- CHANGE THIS TO YOUR SECRET PIN
+      
+      // Hide form, Show Dashboard
+      document.getElementById('formView').classList.remove('active');
+      document.getElementById('managerView').classList.add('active');
+      
+      fetchStats();
+    } else if (pin != null) {
+      alert("Wrong PIN.");
+    }
+  }
+
+  function closeManager() {
+    document.getElementById('managerView').classList.remove('active');
+    document.getElementById('formView').classList.add('active');
+  }
+
+  function fetchStats() {
+    var hospitalId = localStorage.getItem('hospital_id');
+    
+    // ⚠️ PASTE YOUR SCRIPT URL HERE
+    var scriptUrl = "https://script.google.com/macros/s/AKfycbz3NOCsa8Ut4xjqhrIQFx_Fm8ii9SZWeaIr5ZdFROeVfb3D7J7Jmxf8Ob6Pw8CxMpCS/exec"; 
+    
+    // Call the "doGet" function we wrote
+    var url = scriptUrl + "?action=getStats&hospital=" + hospitalId;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          // Update Total Count
+          document.getElementById('totalTickets').innerText = data.total_tickets;
+          
+          // Build the "Pivot Table" List
+          var html = "";
+          data.top_devices.forEach(function(item) {
+            // item[0] is Name, item[1] is Count
+            var percent = Math.round((item[1] / data.total_tickets) * 100);
+            
+            html += `
+              <div style="margin-bottom: 15px;">
+                <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px; margin-bottom:5px;">
+                  <span>${item[0]}</span>
+                  <span>${item[1]} issues</span>
+                </div>
+                <div style="background:#eee; height:8px; border-radius:4px; overflow:hidden;">
+                  <div style="background:#dc3545; height:100%; width:${percent}%"></div>
+                </div>
+              </div>
+            `;
+          });
+          
+          document.getElementById('statsList').innerHTML = html;
+        } else {
+          document.getElementById('statsList').innerHTML = "<p>No data found for this hospital.</p>";
+        }
+      })
+      .catch(error => {
+        document.getElementById('statsList').innerHTML = "<p style='color:red'>Error loading data.</p>";
+      });
   }
 // Store the photo data here
   var base64Photo = "";
@@ -327,6 +414,7 @@
 
 </body>
 </html>
+
 
 
 
