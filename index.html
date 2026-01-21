@@ -163,6 +163,11 @@
   <label>Device Name</label>
   <input type="text" id="device" placeholder="Ex: X-Ray Room 1">
 
+  <label>Device ID / Asset Tag</label>
+  <input type="text" id="deviceId" placeholder="Ex: EQ-2026-88" 
+         style="text-transform: uppercase; letter-spacing: 1px; font-weight: bold;"
+         oninput="this.value = this.value.toUpperCase()">
+
   <label>Issue Description</label>
   <textarea id="issue" rows="4" placeholder="Describe what is wrong..."></textarea>
   
@@ -297,8 +302,9 @@
       phone: localStorage.getItem('user_phone'),
       dept: localStorage.getItem('user_dept'),
       device: document.getElementById('device').value,
+      deviceId: document.getElementById('deviceId').value, // <--- ADD THIS LINE
       issue: document.getElementById('issue').value,
-      image: base64Photo // <--- ADD THIS LINE
+      image: base64Photo 
     };
 
     fetch(url, {
@@ -321,6 +327,7 @@
 
 </body>
 </html>
+
 
 
 
