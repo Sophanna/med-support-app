@@ -163,10 +163,10 @@
   <label>Device Name</label>
   <input type="text" id="device" placeholder="Ex: X-Ray Room 1">
 
-  <label>Device ID / Asset Tag</label>
-  <input type="text" id="deviceId" placeholder="Ex: ABC123" 
+  <label>Device ID / Asset Tag (A-Z, 0-9 Only)</label>
+  <input type="text" id="deviceId" placeholder="Ex: EQ202688" 
          style="text-transform: uppercase; letter-spacing: 1px; font-weight: bold;"
-         oninput="this.value = this.value.toUpperCase()">
+         oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase()">
 
   <label>Issue Description</label>
   <textarea id="issue" rows="4" placeholder="Describe what is wrong..."></textarea>
@@ -414,6 +414,7 @@
 
 </body>
 </html>
+
 
 
 
