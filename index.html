@@ -298,27 +298,69 @@
   }
 
   // 🟢 NEW: SAVE PROFILE & GO TO DASHBOARD (NOT FORM)
-  function saveProfile() {
-    var hospital = document.getElementById('setupHospital').value;
-    var name = document.getElementById('setupName').value;
-    var phone = document.getElementById('setupPhone').value;
-    var dept = document.getElementById('setupDept').value;
+  // CHANGE your saveProfile() function to this:
+function saveProfile() {
+  var name = document.getElementById('setupName').value;
+  var phone = document.getElementById('setupPhone').value;
+  var dept = document.getElementById('setupDept').value;
+  var hospital = document.getElementById('setupHospital').value;
 
-    if (hospital && name && phone && dept) {
-      localStorage.setItem('hospital_id', hospital);
-      localStorage.setItem('user_name', name);
-      localStorage.setItem('user_phone', phone);
-      localStorage.setItem('user_dept', dept);
+  if(name && phone && dept && hospital) {
+    localStorage.setItem('user_name', name);
+    localStorage.setItem('user_phone', phone);
+    localStorage.setItem('user_dept', dept);
+    localStorage.setItem('hospital_id', hospital);
+    
+    // Hide Login, Show Dashboard
+    document.getElementById('setupView').classList.remove('active');
+    document.getElementById('dashboardView').style.display = 'block'; 
+    document.getElementById('dashboardView').classList.add('active'); // Ensure we use active class if you have generic css for it
+    
+    document.getElementById('welcomeMsg').innerText = "Welcome, " + name;
 
-      // TRACKING: Send login log to Google Sheet
-      logLogin(name, phone, dept, hospital);
-
-      // SHOW DASHBOARD
-      showDashboard(name);
-    } else {
-      alert("Please fill in all fields.");
-    }
+    // 🚀 TRACKING: Send "Login Log" to Google Sheet
+    logLogin(name, phone, dept, hospital);
+  } else {
+    alert("Please fill all fields");
   }
+}
+
+// Add these navigation functions
+function goToRequest() {
+  document.getElementById('dashboardView').style.display = 'none';
+  document.getElementById('formView').classList.add('active');
+}
+
+function goToDocs() {
+  document.getElementById('dashboardView').style.display = 'none';
+  document.getElementById('docsView').style.display = 'block';
+  document.getElementById('docsView').classList.add('active');
+}
+
+function goHome() {
+  // Hide everything
+  document.getElementById('formView').classList.remove('active');
+  document.getElementById('docsView').style.display = 'none';
+  
+  // Show Dashboard
+  document.getElementById('dashboardView').style.display = 'block';
+}
+
+// The Tracking Function
+function logLogin(name, phone, dept, hospital) {
+  var data = {
+    type: "login_log", // Tell script this is a log, not a ticket
+    user: name,
+    phone: phone,
+    dept: dept,
+    hospital: hospital
+  };
+  // Send silently (don't wait for response)
+  fetch("YOUR_SCRIPT_URL", {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+}
 
   function showDashboard(name) {
     // Hide Login
@@ -523,6 +565,7 @@
 
 </body>
 </html>
+
 
 
 
