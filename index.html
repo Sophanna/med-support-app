@@ -25,9 +25,27 @@
       transition: transform 0.1s;
       color: #333;
       text-decoration: none;
+      display: flex; /* For better centering */
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     .menu-btn:active { transform: scale(0.98); }
-    .menu-icon { font-size: 30px; margin-bottom: 10px; display: block; }
+
+    /* 🟢 UPDATED: BIGGER EMOJI ICONS */
+    .menu-icon { 
+      font-size: 45px; /* Increased from 30px */
+      margin-bottom: 10px; 
+      display: block; 
+    }
+    
+    /* 🟢 NEW: STYLE FOR IMAGE ICONS */
+    .menu-img {
+      width: 55px; /* A good size to match 45px font */
+      height: auto;
+      margin-bottom: 10px;
+      display: block;
+    }
     .menu-label { font-size: 14px; font-weight: 600; display: block; }
     
     /* STANDARD STYLES */
@@ -164,7 +182,7 @@
 
   <div class="menu-grid">
     <div class="menu-btn" onclick="goToRequest()">
-      <span class="menu-icon">🚑</span>
+      <img src="engineer_icon.png" class="menu-img" alt="Engineer Icon">
       <span class="menu-label">Request Support</span>
     </div>
 
