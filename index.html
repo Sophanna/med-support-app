@@ -120,4 +120,359 @@
     <option value="BB-003">Battambang Provincial Hospital</option>
     <option value="KC-004">KampongCham Provincial Hospital</option>
     <option value="SH-005">Sihanouk Provincial Hospital</option>
-    <option value
+    <option value="SV-006">SvayRieng Provincial Hospital</option>
+    <option value="BMC-007">BanteayMeanchey Provincial Hospital</option>
+  </select>
+
+  <label>Your Name</label>
+  <input type="text" id="setupName" placeholder="Ex: Dr. Sokha">
+
+  <label>Phone Number</label>
+  <input type="tel" id="setupPhone" placeholder="012 345 678">
+
+  <label>Department</label>
+  <input type="text" id="setupDept" placeholder="Ex: ICU, ER, X-Ray">
+
+  <button onclick="saveProfile()">Start App</button>
+  
+   <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
+    <p style="color: #888; font-size: 13px; margin-bottom: 5px;">Are you an Engineer?</p>
+    <a href="https://forum.petthom.com" target="_blank" style="color: #007bff; text-decoration: none; font-weight: 600; font-size: 14px;">
+      🔧 Go to Engineering Forum
+    </a>
+  </div>
+
+  <div style="margin-top: 40px; text-align: center; opacity: 0.6;">
+    <p style="font-size: 11px; color: #999; margin: 0;">
+      Designed & Developed by <br>
+      <strong style="color: #555;">Sophanna Hor</strong>
+    </p>
+    <p style="font-size: 10px; color: #aaa; margin-top: 4px;">
+      Medical Equipment Expert Consultant
+    </p>
+    <p style="font-size: 10px; color: #ccc; margin-top: 15px;">
+      v1.0 &copy; 2026
+    </p>
+  </div>
+</div>
+
+<div class="container" id="dashboardView" style="display:none;">
+  <div style="text-align:center; margin-bottom:20px;">
+    <h2 id="welcomeMsg">Welcome</h2>
+    <p style="color:#888; font-size:12px;">What would you like to do today?</p>
+  </div>
+
+  <div class="menu-grid">
+    <div class="menu-btn" onclick="goToRequest()">
+      <span class="menu-icon">🚑</span>
+      <span class="menu-label">Request Support</span>
+    </div>
+
+    <a href="https://forum.petthom.com" target="_blank" class="menu-btn">
+      <span class="menu-icon">💬</span>
+      <span class="menu-label">Engineer Forum</span>
+    </a>
+
+    <div class="menu-btn" onclick="goToDocs()">
+      <span class="menu-icon">📂</span>
+      <span class="menu-label">Useful Docs</span>
+    </div>
+
+    <div class="menu-btn" onclick="openManager()">
+      <span class="menu-icon">📊</span>
+      <span class="menu-label">Analytics</span>
+    </div>
+  </div>
+
+  <button class="btn-secondary" onclick="resetProfile()" style="margin-top:30px;">Logout</button>
+</div>
+
+<div class="container" id="docsView" style="display:none;">
+  <h3>📂 Useful Documents</h3>
+  <button onclick="goHome()" style="background:#6c757d; padding:5px 10px; font-size:12px; margin-bottom:15px; width:auto;">&larr; Back</button>
+  
+  <div style="margin-top:15px;">
+    <div style="padding:15px; border-bottom:1px solid #eee;">
+      <strong>📘 Ministry Guidelines</strong><br>
+      <a href="#" style="color:#007bff; text-decoration:none;">Download PDF</a>
+    </div>
+    <div style="padding:15px; border-bottom:1px solid #eee;">
+      <strong>📕 Equipment Manuals</strong><br>
+      <a href="#" style="color:#007bff; text-decoration:none;">Open Drive Folder</a>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="formView">
+  <div style="text-align:center; margin-bottom:20px;">
+    <button onclick="goHome()" style="background:#6c757d; padding:5px 10px; font-size:12px; margin-bottom:10px; width:auto; float:left;">&larr; Menu</button>
+    <img src="icon.png" class="app-logo" style="margin-right:50px;"> </div>
+  
+  <h2 id="hospitalTitle">Support</h2>
+  
+  <p style="text-align:center; color:#888; font-size:13px; margin-top:-10px;">
+    User: <b id="displayName">...</b>
+  </p>
+  
+  <hr style="border:0; height:1px; background:#eee; margin:20px 0;">
+
+  <label>Device Name</label>
+  <input type="text" id="device" placeholder="Ex: X-Ray Room 1">
+
+  <label>Device ID / Asset Tag (A-Z, 0-9 Only)</label>
+  <input type="text" id="deviceId" placeholder="Ex: EQ202688" 
+         style="text-transform: uppercase; letter-spacing: 1px; font-weight: bold;"
+         oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase()">
+
+  <label>Issue Description</label>
+  <textarea id="issue" rows="4" placeholder="Describe what is wrong..."></textarea>
+  
+  <label>Attach Photo (Optional)</label>
+  
+  <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto()">
+  
+  <button type="button" id="photoBtn" onclick="document.getElementById('cameraInput').click()" style="background: #6c757d; margin-top: 5px;">
+    📷 Take Photo
+  </button>
+  
+  <div id="photoPreview" style="margin-top: 10px; text-align: center; display: none;">
+    <img id="previewImg" style="max-width: 100px; border-radius: 10px; border: 2px solid #ddd;">
+    <p style="font-size: 12px; color: green; margin: 5px 0;">Photo attached!</p>
+  </div>
+
+  <button onclick="sendData()">SUBMIT REQUEST</button>
+</div>
+
+<div class="container" id="successView" style="text-align: center; padding: 50px 30px;">
+  <div style="font-size: 60px; margin-bottom: 20px;">✅</div>
+  <h2>Request Sent!</h2>
+  <p style="color:#666; margin-bottom: 30px;">The engineering team has been notified.</p>
+  <button onclick="goHome()" style="background: #28a745; box-shadow: 0 4px 10px rgba(40,167,69,0.3);">Back to Home</button>
+</div>
+
+<div class="container" id="managerView" style="max-width: 400px;">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <h2 style="margin:0;">📊 Analytics</h2>
+    <button onclick="closeManager()" style="width:auto; padding:8px 15px; margin:0; font-size:12px; background:#6c757d;">Close</button>
+  </div>
+
+  <div class="info-box" style="background: #eef2f5; color: #333; text-align: left;">
+    <h3 style="margin:0 0 5px 0; font-size:14px; color:#666;">TOTAL REQUESTS</h3>
+    <span id="totalTickets" style="font-size: 32px; font-weight: 800; color: #007bff;">0</span>
+  </div>
+
+  <h3 style="margin-top:25px; border-bottom: 2px solid #eee; padding-bottom: 10px;">🏆 Most Problematic Devices</h3>
+  
+  <div id="statsList" style="margin-top: 15px;">
+    <p style="text-align:center; color:#999;">Loading data...</p>
+  </div>
+</div>
+
+<script>
+  window.onload = function() {
+    var savedHospital = localStorage.getItem('hospital_id');
+    var savedName = localStorage.getItem('user_name');
+
+    // QR Code Auto-fill
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('h')) {
+      document.getElementById('setupHospital').value = params.get('h');
+    }
+
+    if (savedHospital && savedName) {
+      showDashboard(savedName);
+    } else {
+      document.getElementById('setupView').classList.add('active');
+    }
+  }
+
+  // 1. SAVE PROFILE & START
+  function saveProfile() {
+    var name = document.getElementById('setupName').value;
+    var phone = document.getElementById('setupPhone').value;
+    var dept = document.getElementById('setupDept').value;
+    var hospital = document.getElementById('setupHospital').value;
+
+    if(name && phone && dept && hospital) {
+      localStorage.setItem('user_name', name);
+      localStorage.setItem('user_phone', phone);
+      localStorage.setItem('user_dept', dept);
+      localStorage.setItem('hospital_id', hospital);
+      
+      // Tracking
+      logLogin(name, phone, dept, hospital);
+      
+      // Go to Dashboard
+      showDashboard(name);
+    } else {
+      alert("Please fill all fields");
+    }
+  }
+
+  // 2. NAVIGATION
+  function showDashboard(name) {
+    document.getElementById('setupView').classList.remove('active');
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('welcomeMsg').innerText = "Welcome, " + name;
+  }
+
+  function goToRequest() {
+    document.getElementById('dashboardView').style.display = 'none';
+    document.getElementById('formView').classList.add('active');
+    
+    // Auto-fill header
+    document.getElementById('displayName').innerText = localStorage.getItem('user_name');
+    document.getElementById('hospitalTitle').innerText = localStorage.getItem('hospital_id');
+  }
+
+  function goToDocs() {
+    document.getElementById('dashboardView').style.display = 'none';
+    document.getElementById('docsView').style.display = 'block';
+    document.getElementById('docsView').classList.add('active');
+  }
+
+  function goHome() {
+    document.getElementById('formView').classList.remove('active');
+    document.getElementById('docsView').style.display = 'none';
+    document.getElementById('successView').classList.remove('active');
+    
+    document.getElementById('dashboardView').style.display = 'block';
+  }
+
+  function resetProfile() {
+    if(confirm("Log out and change details?")) {
+      localStorage.clear();
+      location.reload();
+    }
+  }
+
+  // 3. TRACKING
+  function logLogin(name, phone, dept, hospital) {
+    var data = {
+      type: "login_log", 
+      user: name, phone: phone, dept: dept, hospital: hospital
+    };
+    // ⚠️ PASTE YOUR SCRIPT URL BELOW
+    var url = "https://script.google.com/macros/s/AKfycbz3NOCsa8Ut4xjqhrIQFx_Fm8ii9SZWeaIr5ZdFROeVfb3D7J7Jmxf8Ob6Pw8CxMpCS/exec"; 
+    fetch(url, { method: "POST", body: JSON.stringify(data) });
+  }
+
+  // 4. MANAGER & ANALYTICS
+  function openManager() {
+    var pin = prompt("Enter Manager PIN:");
+    if (pin === "1234") { 
+      document.getElementById('dashboardView').style.display = 'none'; // Hide menu
+      document.getElementById('managerView').classList.add('active');
+      fetchStats();
+    } else if (pin != null) {
+      alert("Wrong PIN.");
+    }
+  }
+
+  function closeManager() {
+    document.getElementById('managerView').classList.remove('active');
+    document.getElementById('dashboardView').style.display = 'block'; // Show menu
+  }
+
+  function fetchStats() {
+    var hospitalId = localStorage.getItem('hospital_id');
+    // ⚠️ PASTE YOUR SCRIPT URL BELOW
+    var scriptUrl = "https://script.google.com/macros/s/AKfycbz3NOCsa8Ut4xjqhrIQFx_Fm8ii9SZWeaIr5ZdFROeVfb3D7J7Jmxf8Ob6Pw8CxMpCS/exec"; 
+    
+    var url = scriptUrl + "?action=getStats&hospital=" + hospitalId;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          document.getElementById('totalTickets').innerText = data.total_tickets;
+          var html = "";
+          data.top_devices.forEach(function(item) {
+            var percent = Math.round((item[1] / data.total_tickets) * 100);
+            html += `
+              <div style="margin-bottom: 15px;">
+                <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px; margin-bottom:5px;">
+                  <span>${item[0]}</span>
+                  <span>${item[1]} issues</span>
+                </div>
+                <div style="background:#eee; height:8px; border-radius:4px; overflow:hidden;">
+                  <div style="background:#dc3545; height:100%; width:${percent}%"></div>
+                </div>
+              </div>`;
+          });
+          document.getElementById('statsList').innerHTML = html;
+        } else {
+          document.getElementById('statsList').innerHTML = "<p>No data found.</p>";
+        }
+      })
+      .catch(error => {
+        document.getElementById('statsList').innerHTML = "<p style='color:red'>Error loading data.</p>";
+      });
+  }
+
+  // 5. CAMERA & SENDING
+  var base64Photo = "";
+  function handlePhoto() {
+    var input = document.getElementById('cameraInput');
+    var file = input.files[0];
+    if (file) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var img = new Image();
+        img.src = e.target.result;
+        img.onload = function() {
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext('2d');
+          var MAX_WIDTH = 800;
+          var scale = MAX_WIDTH / img.width;
+          canvas.width = MAX_WIDTH;
+          canvas.height = img.height * scale;
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          base64Photo = canvas.toDataURL('image/jpeg', 0.7); 
+          document.getElementById('previewImg').src = base64Photo;
+          document.getElementById('photoPreview').style.display = 'block';
+          document.getElementById('photoBtn').innerText = "✅ Photo Ready";
+          document.getElementById('photoBtn').style.background = "#28a745";
+        }
+      }
+      reader.readAsDataURL(file);
+    }
+  }
+  
+  function sendData() {
+    // ⚠️ PASTE YOUR SCRIPT URL BELOW
+    var url = "https://script.google.com/macros/s/AKfycbz3NOCsa8Ut4xjqhrIQFx_Fm8ii9SZWeaIr5ZdFROeVfb3D7J7Jmxf8Ob6Pw8CxMpCS/exec"; 
+
+    var btn = document.querySelector('#formView button[onclick="sendData()"]');
+    btn.disabled = true;
+    btn.innerText = "Sending...";
+    btn.style.opacity = "0.7";
+
+    var data = {
+      hospital: localStorage.getItem('hospital_id'),
+      user: localStorage.getItem('user_name'),
+      phone: localStorage.getItem('user_phone'),
+      dept: localStorage.getItem('user_dept'),
+      device: document.getElementById('device').value,
+      deviceId: document.getElementById('deviceId').value,
+      issue: document.getElementById('issue').value,
+      image: base64Photo 
+    };
+
+    fetch(url, { method: "POST", body: JSON.stringify(data) })
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('formView').classList.remove('active');
+      document.getElementById('successView').classList.add('active');
+    })
+    .catch(error => {
+      alert("Error! Check internet.");
+      btn.disabled = false;
+      btn.innerText = "SUBMIT REQUEST";
+      btn.style.opacity = "1";
+    });
+  }
+</script>
+
+</body>
+</html>
