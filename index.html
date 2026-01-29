@@ -7,6 +7,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
+    .menu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 20px;
+}
+.menu-btn {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: transform 0.1s;
+  color: #333;
+  text-decoration: none;
+}
+.menu-btn:active { transform: scale(0.98); }
+.menu-icon { font-size: 30px; margin-bottom: 10px; display: block; }
+.menu-label { font-size: 14px; font-weight: 600; display: block; }
+    
     body { 
       font-family: 'Inter', sans-serif;
       background-color: #f4f7f6; 
@@ -414,6 +436,7 @@
 
 </body>
 </html>
+
 
 
 
